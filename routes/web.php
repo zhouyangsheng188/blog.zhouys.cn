@@ -22,6 +22,12 @@ Route::group(['namespace' => 'Admin'], function(){
     Route::get('/admin/index/index', 'IndexController@index');
     //文章列表
     Route::get('/admin/article/index', 'ArticleController@index');
+    //编辑文章
+    Route::get('/admin/article/edit/{id}', 'ArticleController@edit')->where('id','[0-9]+');
+    //新建文章
+    Route::get('/admin/article/create', 'ArticleController@create');
+    //上传文章图片
+    Route::post('/admin/article/store', 'ArticleController@store');
 });
 
 

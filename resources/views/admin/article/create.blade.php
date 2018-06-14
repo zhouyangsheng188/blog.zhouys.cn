@@ -3,15 +3,8 @@
 @section('title', '发布文章')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('statics/editormd/css/editormd.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('statics/iCheck-1.0.2/skins/all.css') }}">
     <link rel="stylesheet" href="{{ asset('statics/gentelella/vendors/switchery/dist/switchery.min.css') }}">
     <link href="{{ asset('statics/jasny-bootstrap/css/jasny-bootstrap.min.css') }}" rel="stylesheet">
-    <style>
-        #bjy-content{
-            z-index: 1000;
-        }
-    </style>
 @endsection
 
 @section('nav', '发布文章')
@@ -30,7 +23,8 @@
         </li>
     </ul>
     <form class="form-horizontal " action="{{ url('admin/article/store') }}" method="post" enctype="multipart/form-data">
-        {{ csrf_field() }}
+        @csrf
+        <input type="hidden" name="_token" value="{{csrf_token()}}">
         <table class="table table-striped table-bordered table-hover">
             <tr>
                 <th width="7%">分类</th>
@@ -46,26 +40,26 @@
             <tr>
                 <th>标题</th>
                 <td>
-                    <input class="form-control" type="text" name="title" value="{{ old('title') }}">
+                    <input class="form-control" type="text" placeholder="文章的标题" name="title" value="">
                 </td>
             </tr>
             <tr>
-                <th>作者{{ $author }}</th>
+                <th>作者</th>
                 <td>
-                    <input class="form-control" type="text" name="author" value="@if(empty(old('author'))){{ $author }}@else{{ old('author') }}@endif">
+                    <input class="form-control" type="text" placeholder="文章的作者" name="author" value="">
                 </td>
             </tr>
             <tr>
                 <th>关键词</th>
                 <td>
-                    <input class="form-control" type="text" placeholder="用英文逗号分隔" name="keywords" value="{{ old('keywords') }}">
+                    <input class="form-control" type="text" placeholder="用英文逗号分隔" name="keywords" value="">
                 </td>
             </tr>
             <tr>
                 <th>标签</th>
                 <td>
                     @foreach($tag as $v)
-                        {{ $v['name'] }}<input class="bjy-icheck" type="checkbox" name="tag_ids[]" value="{{ $v['id'] }}" @if(in_array($v['id'], old('tag_ids', []))) checked="checked" @endif> &emsp;
+                        {{ $v['name'] }}<input class="bjy-icheck" style="width: 18px;height: 18px" type="checkbox" name="tag_ids[]" value="{{ $v['id'] }}" @if(in_array($v['id'], old('tag_ids', []))) checked="checked" @endif> &emsp;
                     @endforeach
                     <i class="fa fa-plus-square" style="font-size: 20px;cursor: pointer" data-toggle="modal" data-target="#bjy-tag-modal"></i>
                 </td>
@@ -97,9 +91,7 @@
             <tr>
                 <th>内容</th>
                 <td>
-                    <div id="bjy-content">
-                        <textarea name="markdown">{{ old('markdown') }}</textarea>
-                    </div>
+                    <div id="editor"></div>
                 </td>
             </tr>
             <tr>
@@ -140,40 +132,54 @@
 
 @section('js')
     <script src="{{ asset('statics/gentelella/vendors/switchery/dist/switchery.min.js') }}"></script>
-    <script src="{{ asset('statics/editormd/editormd.min.js') }}"></script>
-    <script src="{{ asset('statics/iCheck-1.0.2/icheck.min.js') }}"></script>
-    <script src="{{ asset('statics/jasny-bootstrap/js/jasny-bootstrap.min.js') }}"></script>
+    <script src="{{ asset('statics/wangEditor/release/wangEditor.min.js') }}"></script>
     <script>
-        var testEditor;
+        var E = window.wangEditor;
+        var editor = new E('#editor');
+        //上传图片
+        editor.customConfig.uploadImgServer = '/admin/article/store';
+        // 将图片大小限制为 3M
+        editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+        // 将 timeout 时间改为 10s
+        editor.customConfig.uploadImgTimeout = 10000;
+        // 设置 headers
+        editor.customConfig.uploadImgHeaders = {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        };
+        //自定义 fileName
+        editor.customConfig.uploadFileName = 'articlePic';
+        editor.customConfig.uploadImgHooks = {
+//            before: function (xhr, editor, files) {
+//                // 图片上传之前触发
+//                // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+//
+//                // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+//                // return {
+//                //     prevent: true,
+//                //     msg: '放弃上传'
+//                // }
+//            },
+            success: function (xhr, editor, result,insertImg) {
 
-        $(function() {
-            // You can custom @link base url.
-            editormd.urls.atLinkBase = "https://github.com/";
+            },
+            customInsert: function (insertImg, result, editor) {
+                // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+                // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
 
-            testEditor = editormd("bjy-content", {
-                width     : "100%",
-                height    : 720,
-                toc       : true,
-                //atLink    : false,    // disable @link
-                //emailLink : false,    // disable email address auto link
-                todoList  : true,
-                placeholder: '输入文章内容',
-                toolbarAutoFixed: false,
-                path      : '{{ asset('/statics/editormd/lib') }}/',
-                emoji: true,
-                toolbarIcons : ['undo', 'redo', 'bold', 'del', 'italic', 'quote', 'uppercase', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'list-ul', 'list-ol', 'hr', 'link', 'reference-link', 'image', 'code', 'code-block', 'table', 'emoji', 'html-entities', 'watch', 'preview', 'search', 'fullscreen'],
-                imageUpload: true,
-                imageUploadURL : '{{ url('admin/article/uploadImage') }}',
-            });
-        });
-        function icheckInit() {
-            $('.bjy-icheck').iCheck({
-                checkboxClass: "icheckbox_minimal-blue",
-                radioClass: "iradio_minimal-blue",
-                increaseArea: "20%"
-            });
+                // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+                //console.log(result);
+console.log(result);
+                var url = result.data[0];
+                insertImg(url);
+                console.log(url);
+                // result 必须是一个 JSON 格式字符串！！！否则报错
+            }
         }
-        icheckInit();
+        editor.customConfig.customAlert = function (info) {
+            // info 是需要提示的内容
+            alert('图片长传失败')
+        }
+        editor.create()
 
         function addTag() {
             var postData = {
@@ -187,7 +193,6 @@
                 success: function (response) {
                     var redioStr = response.name+'<input class="bjy-icheck" type="checkbox" name="tag_ids[]" value="'+response.id+'" checked="checked"> &emsp;';
                     $('.fa-plus-square').before(redioStr);
-                    icheckInit();
                     $('#bjy-tag-modal').modal('hide');
                 },
                 error: function (response) {
