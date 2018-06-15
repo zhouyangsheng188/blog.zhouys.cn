@@ -384,7 +384,7 @@ class RequestTest extends TestCase
     {
         $server = array();
 
-        // Standard Request on non default PORT
+        // Standard Requests on non default PORT
         // http://host:8080/index.php/path/info?query=string
 
         $server['HTTP_HOST'] = 'host:8080';
@@ -423,7 +423,7 @@ class RequestTest extends TestCase
 
         $this->assertEquals('http://servername/index.php/path/info?query=string', $request->getUri(), '->getUri() with default port without HOST_HEADER');
 
-        // Request with URL REWRITING (hide index.php)
+        // Requests with URL REWRITING (hide index.php)
         //   RewriteCond %{REQUEST_FILENAME} !-f
         //   RewriteRule ^(.*)$ index.php [QSA,L]
         // http://host:8080/path/info?query=string
@@ -511,7 +511,7 @@ class RequestTest extends TestCase
 
         $server = array();
 
-        // Standard Request on non default PORT
+        // Standard Requests on non default PORT
         // http://host:8080/index.php/path/info?query=string
 
         $server['HTTP_HOST'] = 'host:8080';
@@ -550,7 +550,7 @@ class RequestTest extends TestCase
 
         $this->assertEquals('http://servername/index.php/some/path', $request->getUriForPath('/some/path'), '->getUriForPath() with default port without HOST_HEADER');
 
-        // Request with URL REWRITING (hide index.php)
+        // Requests with URL REWRITING (hide index.php)
         //   RewriteCond %{REQUEST_FILENAME} !-f
         //   RewriteRule ^(.*)$ index.php [QSA,L]
         // http://host:8080/path/info?query=string
@@ -1188,7 +1188,7 @@ class RequestTest extends TestCase
         $request = new Request();
         $request->initialize(array('foo' => 'bar'));
 
-        // as the Request::overrideGlobals really work, it erase $_SERVER, so we must backup it
+        // as the Requests::overrideGlobals really work, it erase $_SERVER, so we must backup it
         $server = $_SERVER;
 
         $request->overrideGlobals();
@@ -1670,7 +1670,7 @@ class RequestTest extends TestCase
 
     private function disableHttpMethodParameterOverride()
     {
-        $class = new \ReflectionClass('Symfony\\Component\\HttpFoundation\\Request');
+        $class = new \ReflectionClass('Symfony\\Component\\HttpFoundation\\Requests');
         $property = $class->getProperty('httpMethodParameterOverride');
         $property->setAccessible(true);
         $property->setValue(false);
@@ -1767,7 +1767,7 @@ class RequestTest extends TestCase
 
     /**
      * @group legacy
-     * @expectedDeprecation The "Symfony\Component\HttpFoundation\Request::setTrustedHeaderName()" method is deprecated since Symfony 3.3 and will be removed in 4.0. Use the $trustedHeaderSet argument of the Request::setTrustedProxies() method instead.
+     * @expectedDeprecation The "Symfony\Component\HttpFoundation\Requests::setTrustedHeaderName()" method is deprecated since Symfony 3.3 and will be removed in 4.0. Use the $trustedHeaderSet argument of the Requests::setTrustedProxies() method instead.
      */
     public function testLegacyTrustedProxies()
     {
@@ -1986,7 +1986,7 @@ class RequestTest extends TestCase
         $request->headers->set('host', 'evil.com');
         try {
             $request->getHost();
-            $this->fail('Request::getHost() should throw an exception when host is not trusted.');
+            $this->fail('Requests::getHost() should throw an exception when host is not trusted.');
         } catch (SuspiciousOperationException $e) {
             $this->assertEquals('Untrusted Host "evil.com".', $e->getMessage());
         }
@@ -2143,7 +2143,7 @@ class RequestTest extends TestCase
 
     /**
      * @group legacy
-     * @expectedDeprecation Checking only for cacheable HTTP methods with Symfony\Component\HttpFoundation\Request::isMethodSafe() is deprecated since Symfony 3.2 and will throw an exception in 4.0. Disable checking only for cacheable methods by calling the method with `false` as first argument or use the Request::isMethodCacheable() instead.
+     * @expectedDeprecation Checking only for cacheable HTTP methods with Symfony\Component\HttpFoundation\Requests::isMethodSafe() is deprecated since Symfony 3.2 and will throw an exception in 4.0. Disable checking only for cacheable methods by calling the method with `false` as first argument or use the Requests::isMethodCacheable() instead.
      */
     public function testMethodSafeChecksCacheable()
     {

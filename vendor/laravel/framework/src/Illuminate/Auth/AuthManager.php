@@ -34,7 +34,7 @@ class AuthManager implements FactoryContract
     /**
      * The user resolver shared by various services.
      *
-     * Determines the default user for Gate, Request, and the Authenticatable contract.
+     * Determines the default user for Gate, Requests, and the Authenticatable contract.
      *
      * @var \Closure
      */

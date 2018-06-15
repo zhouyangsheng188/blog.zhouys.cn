@@ -3177,7 +3177,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
 
     function verifyRequestSent(xhr) {
         if (xhr.readyState == FakeXMLHttpRequest.DONE) {
-            throw new Error("Request done");
+            throw new Error("Requests done");
         }
     }
 
@@ -3444,7 +3444,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         304: "Not Modified",
         305: "Use Proxy",
         307: "Temporary Redirect",
-        400: "Bad Request",
+        400: "Bad Requests",
         401: "Unauthorized",
         402: "Payment Required",
         403: "Forbidden",
@@ -3452,13 +3452,13 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         405: "Method Not Allowed",
         406: "Not Acceptable",
         407: "Proxy Authentication Required",
-        408: "Request Timeout",
+        408: "Requests Timeout",
         409: "Conflict",
         410: "Gone",
         411: "Length Required",
         412: "Precondition Failed",
-        413: "Request Entity Too Large",
-        414: "Request-URI Too Long",
+        413: "Requests Entity Too Large",
+        414: "Requests-URI Too Long",
         415: "Unsupported Media Type",
         416: "Requested Range Not Satisfiable",
         417: "Expectation Failed",
@@ -3593,7 +3593,7 @@ sinon.fakeServer = (function () {
     function log(response, request) {
         var str;
 
-        str =  "Request:\n"  + sinon.format(request)  + "\n\n";
+        str =  "Requests:\n"  + sinon.format(request)  + "\n\n";
         str += "Response:\n" + sinon.format(response) + "\n\n";
 
         sinon.log(str);

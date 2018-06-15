@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface DataCollectorInterface
 {
     /**
-     * Collects data for the given Request and Response.
+     * Collects data for the given Requests and Response.
      */
     public function collect(Request $request, Response $response, \Exception $exception = null);
 

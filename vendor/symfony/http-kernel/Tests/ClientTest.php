@@ -29,14 +29,14 @@ class ClientTest extends TestCase
         $client = new Client(new TestHttpKernel());
 
         $client->request('GET', '/');
-        $this->assertEquals('Request: /', $client->getResponse()->getContent(), '->doRequest() uses the request handler to make the request');
+        $this->assertEquals('Requests: /', $client->getResponse()->getContent(), '->doRequest() uses the request handler to make the request');
         $this->assertInstanceOf('Symfony\Component\BrowserKit\Request', $client->getInternalRequest());
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Request', $client->getRequest());
         $this->assertInstanceOf('Symfony\Component\BrowserKit\Response', $client->getInternalResponse());
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $client->getResponse());
 
         $client->request('GET', 'http://www.example.com/');
-        $this->assertEquals('Request: /', $client->getResponse()->getContent(), '->doRequest() uses the request handler to make the request');
+        $this->assertEquals('Requests: /', $client->getResponse()->getContent(), '->doRequest() uses the request handler to make the request');
         $this->assertEquals('www.example.com', $client->getRequest()->getHost(), '->doRequest() uses the request handler to make the request');
 
         $client->request('GET', 'http://www.example.com/?parameter=http://google.com');
@@ -49,7 +49,7 @@ class ClientTest extends TestCase
         $client->insulate();
         $client->request('GET', '/');
 
-        $this->assertEquals('Request: /', $client->getResponse()->getContent(), '->getScript() returns a script that uses the request handler to make the request');
+        $this->assertEquals('Requests: /', $client->getResponse()->getContent(), '->getScript() returns a script that uses the request handler to make the request');
     }
 
     public function testFilterResponseConvertsCookies()

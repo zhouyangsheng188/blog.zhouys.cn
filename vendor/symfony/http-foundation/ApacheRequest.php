@@ -12,7 +12,7 @@
 namespace Symfony\Component\HttpFoundation;
 
 /**
- * Request represents an HTTP request from an Apache server.
+ * Requests represents an HTTP request from an Apache server.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */

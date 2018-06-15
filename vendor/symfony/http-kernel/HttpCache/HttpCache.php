@@ -126,9 +126,9 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Gets the Request instance associated with the master request.
+     * Gets the Requests instance associated with the master request.
      *
-     * @return Request A Request instance
+     * @return Request A Requests instance
      */
     public function getRequest()
     {
@@ -220,9 +220,9 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Forwards the Request to the backend without storing the Response in the cache.
+     * Forwards the Requests to the backend without storing the Response in the cache.
      *
-     * @param Request $request A Request instance
+     * @param Request $request A Requests instance
      * @param bool    $catch   Whether to process exceptions
      *
      * @return Response A Response instance
@@ -237,7 +237,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     /**
      * Invalidates non-safe methods (like POST, PUT, and DELETE).
      *
-     * @param Request $request A Request instance
+     * @param Request $request A Requests instance
      * @param bool    $catch   Whether to process exceptions
      *
      * @return Response A Response instance
@@ -278,7 +278,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Lookups a Response from the cache for the given Request.
+     * Lookups a Response from the cache for the given Requests.
      *
      * When a matching cache entry is found and is fresh, it uses it as the
      * response without forwarding any request to the backend. When a matching
@@ -286,7 +286,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      * the backend using conditional GET. When no matching cache entry is found,
      * it triggers "miss" processing.
      *
-     * @param Request $request A Request instance
+     * @param Request $request A Requests instance
      * @param bool    $catch   Whether to process exceptions
      *
      * @return Response A Response instance
@@ -332,7 +332,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      * The original request is used as a template for a conditional
      * GET request with the backend.
      *
-     * @param Request  $request A Request instance
+     * @param Request  $request A Requests instance
      * @param Response $entry   A Response instance to validate
      * @param bool     $catch   Whether to process exceptions
      *
@@ -395,7 +395,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      * Unconditionally fetches a fresh response from the backend and
      * stores it in the cache if is cacheable.
      *
-     * @param Request $request A Request instance
+     * @param Request $request A Requests instance
      * @param bool    $catch   Whether to process exceptions
      *
      * @return Response A Response instance
@@ -423,12 +423,12 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Forwards the Request to the backend and returns the Response.
+     * Forwards the Requests to the backend and returns the Response.
      *
      * All backend requests (cache passes, fetches, cache validations)
      * run through this method.
      *
-     * @param Request  $request A Request instance
+     * @param Request  $request A Requests instance
      * @param bool     $catch   Whether to catch exceptions or not
      * @param Response $entry   A Response instance (the stale entry if present, null otherwise)
      *
@@ -498,7 +498,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Checks whether the cache entry is "fresh enough" to satisfy the Request.
+     * Checks whether the cache entry is "fresh enough" to satisfy the Requests.
      *
      * @return bool true if the cache entry if fresh enough, false otherwise
      */
@@ -516,7 +516,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Locks a Request during the call to the backend.
+     * Locks a Requests during the call to the backend.
      *
      * @return bool true if the cache entry can be returned even if it is staled, false otherwise
      */
@@ -625,10 +625,10 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Checks if the Request includes authorization or other sensitive information
+     * Checks if the Requests includes authorization or other sensitive information
      * that should cause the Response to be considered private by default.
      *
-     * @return bool true if the Request is private, false otherwise
+     * @return bool true if the Requests is private, false otherwise
      */
     private function isPrivateRequest(Request $request)
     {
@@ -650,7 +650,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     /**
      * Records that an event took place.
      *
-     * @param Request $request A Request instance
+     * @param Request $request A Requests instance
      * @param string  $event   The event name
      */
     private function record(Request $request, $event)

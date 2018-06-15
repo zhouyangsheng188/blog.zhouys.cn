@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * A ControllerResolverInterface implementation knows how to determine the
- * controller to execute based on a Request object.
+ * controller to execute based on a Requests object.
  *
  * It can also determine the arguments to pass to the Controller.
  *
@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 interface ControllerResolverInterface
 {
     /**
-     * Returns the Controller instance associated with a Request.
+     * Returns the Controller instance associated with a Requests.
      *
      * As several resolvers can exist for a single application, a resolver must
      * return false when it is not able to determine the controller.
@@ -44,7 +44,7 @@ interface ControllerResolverInterface
     /**
      * Returns the arguments to pass to the controller.
      *
-     * @param Request  $request    A Request instance
+     * @param Request  $request    A Requests instance
      * @param callable $controller A PHP callable
      *
      * @return array An array of arguments to pass to the controller

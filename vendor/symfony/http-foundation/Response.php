@@ -146,7 +146,7 @@ class Response
         305 => 'Use Proxy',
         307 => 'Temporary Redirect',
         308 => 'Permanent Redirect',    // RFC7238
-        400 => 'Bad Request',
+        400 => 'Bad Requests',
         401 => 'Unauthorized',
         402 => 'Payment Required',
         403 => 'Forbidden',
@@ -154,7 +154,7 @@ class Response
         405 => 'Method Not Allowed',
         406 => 'Not Acceptable',
         407 => 'Proxy Authentication Required',
-        408 => 'Request Timeout',
+        408 => 'Requests Timeout',
         409 => 'Conflict',
         410 => 'Gone',
         411 => 'Length Required',
@@ -165,7 +165,7 @@ class Response
         416 => 'Range Not Satisfiable',
         417 => 'Expectation Failed',
         418 => 'I\'m a teapot',                                               // RFC2324
-        421 => 'Misdirected Request',                                         // RFC7540
+        421 => 'Misdirected Requests',                                         // RFC7540
         422 => 'Unprocessable Entity',                                        // RFC4918
         423 => 'Locked',                                                      // RFC4918
         424 => 'Failed Dependency',                                           // RFC4918
@@ -173,7 +173,7 @@ class Response
         426 => 'Upgrade Required',                                            // RFC2817
         428 => 'Precondition Required',                                       // RFC6585
         429 => 'Too Many Requests',                                           // RFC6585
-        431 => 'Request Header Fields Too Large',                             // RFC6585
+        431 => 'Requests Header Fields Too Large',                             // RFC6585
         451 => 'Unavailable For Legal Reasons',                               // RFC7725
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
@@ -254,7 +254,7 @@ class Response
      *
      * This method tweaks the Response to ensure that it is
      * compliant with RFC 2616. Most of the changes are based on
-     * the Request that is "associated" with this Response.
+     * the Requests that is "associated" with this Response.
      *
      * @return $this
      */
@@ -267,7 +267,7 @@ class Response
             $headers->remove('Content-Type');
             $headers->remove('Content-Length');
         } else {
-            // Content-type based on the Request
+            // Content-type based on the Requests
             if (!$headers->has('Content-Type')) {
                 $format = $request->getRequestFormat();
                 if (null !== $format && $mimeType = $request->getMimeType($format)) {
@@ -1082,12 +1082,12 @@ class Response
 
     /**
      * Determines if the Response validators (ETag, Last-Modified) match
-     * a conditional value specified in the Request.
+     * a conditional value specified in the Requests.
      *
      * If the Response is not modified, it sets the status code to 304 and
      * removes the actual content by calling the setNotModified() method.
      *
-     * @return bool true if the Response validators match the Request, false otherwise
+     * @return bool true if the Response validators match the Requests, false otherwise
      *
      * @final since version 3.3
      */

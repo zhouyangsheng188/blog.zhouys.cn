@@ -108,8 +108,8 @@ var CanvasRenderer = function(el, options) {
 	};
 
 	/**
-	 * Request animation frame wrapper with polyfill
-	 * @return {function} Request animation frame method or timeout fallback
+	 * Requests animation frame wrapper with polyfill
+	 * @return {function} Requests animation frame method or timeout fallback
 	 */
 	var reqAnimationFrame = (function() {
 		return  window.requestAnimationFrame ||

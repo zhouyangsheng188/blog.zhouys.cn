@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * Request represents an HTTP request.
+ * Requests represents an HTTP request.
  *
  * The methods dealing with URL accept / return a raw path (% encoded):
  *   * getBasePath
@@ -102,7 +102,7 @@ class Request
     public $attributes;
 
     /**
-     * Request body parameters ($_POST).
+     * Requests body parameters ($_POST).
      *
      * @var \Symfony\Component\HttpFoundation\ParameterBag
      */
@@ -324,7 +324,7 @@ class Request
     }
 
     /**
-     * Creates a Request based on a given URI and configuration.
+     * Creates a Requests based on a given URI and configuration.
      *
      * The information contained in the URI always take precedence
      * over the other information (server and parameters).
@@ -432,9 +432,9 @@ class Request
     }
 
     /**
-     * Sets a callable able to create a Request instance.
+     * Sets a callable able to create a Requests instance.
      *
-     * This is mainly useful when you need to override the Request class
+     * This is mainly useful when you need to override the Requests class
      * to keep BC with an existing system. It should not be used for any
      * other purpose.
      *
@@ -590,7 +590,7 @@ class Request
      * You should only list the reverse proxies that you manage directly.
      *
      * @param array $proxies          A list of trusted proxies
-     * @param int   $trustedHeaderSet A bit field of Request::HEADER_*, to set which headers to trust from your proxies
+     * @param int   $trustedHeaderSet A bit field of Requests::HEADER_*, to set which headers to trust from your proxies
      *
      * @throws \InvalidArgumentException When $trustedHeaderSet is invalid
      */
@@ -599,7 +599,7 @@ class Request
         self::$trustedProxies = $proxies;
 
         if (2 > func_num_args()) {
-            @trigger_error(sprintf('The %s() method expects a bit field of Request::HEADER_* as second argument since Symfony 3.3. Defining it will be required in 4.0. ', __METHOD__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('The %s() method expects a bit field of Requests::HEADER_* as second argument since Symfony 3.3. Defining it will be required in 4.0. ', __METHOD__), E_USER_DEPRECATED);
 
             return;
         }
@@ -624,7 +624,7 @@ class Request
     /**
      * Gets the set of trusted headers from trusted proxies.
      *
-     * @return int A bit field of Request::HEADER_* that defines which headers are trusted from your proxies
+     * @return int A bit field of Requests::HEADER_* that defines which headers are trusted from your proxies
      */
     public static function getTrustedHeaderSet()
     {
@@ -662,11 +662,11 @@ class Request
      *
      * The following header keys are supported:
      *
-     *  * Request::HEADER_CLIENT_IP:    defaults to X-Forwarded-For   (see getClientIp())
-     *  * Request::HEADER_CLIENT_HOST:  defaults to X-Forwarded-Host  (see getHost())
-     *  * Request::HEADER_CLIENT_PORT:  defaults to X-Forwarded-Port  (see getPort())
-     *  * Request::HEADER_CLIENT_PROTO: defaults to X-Forwarded-Proto (see getScheme() and isSecure())
-     *  * Request::HEADER_FORWARDED:    defaults to Forwarded         (see RFC 7239)
+     *  * Requests::HEADER_CLIENT_IP:    defaults to X-Forwarded-For   (see getClientIp())
+     *  * Requests::HEADER_CLIENT_HOST:  defaults to X-Forwarded-Host  (see getHost())
+     *  * Requests::HEADER_CLIENT_PORT:  defaults to X-Forwarded-Port  (see getPort())
+     *  * Requests::HEADER_CLIENT_PROTO: defaults to X-Forwarded-Proto (see getScheme() and isSecure())
+     *  * Requests::HEADER_FORWARDED:    defaults to Forwarded         (see RFC 7239)
      *
      * Setting an empty value allows to disable the trusted header for the given key.
      *
@@ -675,11 +675,11 @@ class Request
      *
      * @throws \InvalidArgumentException
      *
-     * @deprecated since version 3.3, to be removed in 4.0. Use the $trustedHeaderSet argument of the Request::setTrustedProxies() method instead.
+     * @deprecated since version 3.3, to be removed in 4.0. Use the $trustedHeaderSet argument of the Requests::setTrustedProxies() method instead.
      */
     public static function setTrustedHeaderName($key, $value)
     {
-        @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 3.3 and will be removed in 4.0. Use the $trustedHeaderSet argument of the Request::setTrustedProxies() method instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 3.3 and will be removed in 4.0. Use the $trustedHeaderSet argument of the Requests::setTrustedProxies() method instead.', __METHOD__), E_USER_DEPRECATED);
 
         if ('forwarded' === $key) {
             $key = self::HEADER_FORWARDED;
@@ -714,12 +714,12 @@ class Request
      *
      * @throws \InvalidArgumentException
      *
-     * @deprecated since version 3.3, to be removed in 4.0. Use the Request::getTrustedHeaderSet() method instead.
+     * @deprecated since version 3.3, to be removed in 4.0. Use the Requests::getTrustedHeaderSet() method instead.
      */
     public static function getTrustedHeaderName($key)
     {
         if (2 > func_num_args() || func_get_arg(1)) {
-            @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 3.3 and will be removed in 4.0. Use the Request::getTrustedHeaderSet() method instead.', __METHOD__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 3.3 and will be removed in 4.0. Use the Requests::getTrustedHeaderSet() method instead.', __METHOD__), E_USER_DEPRECATED);
         }
 
         if (!array_key_exists($key, self::$trustedHeaders)) {
@@ -737,7 +737,7 @@ class Request
      *
      * @param string $qs Query string
      *
-     * @return string A normalized query string for the Request
+     * @return string A normalized query string for the Requests
      */
     public static function normalizeQueryString($qs)
     {
@@ -855,10 +855,10 @@ class Request
      * Whether the request contains a Session object.
      *
      * This method does not give any information about the state of the session object,
-     * like whether the session is started or not. It is just a way to check if this Request
+     * like whether the session is started or not. It is just a way to check if this Requests
      * is associated with a Session instance.
      *
-     * @return bool true when the Request contains a Session object, false otherwise
+     * @return bool true when the Requests contains a Session object, false otherwise
      */
     public function hasSession()
     {
@@ -910,7 +910,7 @@ class Request
      *
      * If your reverse proxy uses a different header name than "X-Forwarded-For",
      * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
-     * argument of the Request::setTrustedProxies() method instead.
+     * argument of the Requests::setTrustedProxies() method instead.
      *
      * @return string|null The client IP address
      *
@@ -1017,7 +1017,7 @@ class Request
      *
      * If your reverse proxy uses a different header name than "X-Forwarded-Port",
      * configure it via via the $trustedHeaderSet argument of the
-     * Request::setTrustedProxies() method instead.
+     * Requests::setTrustedProxies() method instead.
      *
      * @return int|string can be a string if fetched from the server bag
      */
@@ -1128,9 +1128,9 @@ class Request
     }
 
     /**
-     * Generates a normalized URI (URL) for the Request.
+     * Generates a normalized URI (URL) for the Requests.
      *
-     * @return string A normalized URI (URL) for the Request
+     * @return string A normalized URI (URL) for the Requests
      *
      * @see getQueryString()
      */
@@ -1156,7 +1156,7 @@ class Request
     }
 
     /**
-     * Returns the path as relative reference from the current Request path.
+     * Returns the path as relative reference from the current Requests path.
      *
      * Only the URIs path component (no schema, host etc.) is relevant and must be given.
      * Both paths must be absolute and not contain relative parts.
@@ -1211,12 +1211,12 @@ class Request
     }
 
     /**
-     * Generates the normalized query string for the Request.
+     * Generates the normalized query string for the Requests.
      *
      * It builds a normalized query string, where keys/value pairs are alphabetized
      * and have consistent escaping.
      *
-     * @return string|null A normalized query string for the Request
+     * @return string|null A normalized query string for the Requests
      */
     public function getQueryString()
     {
@@ -1235,7 +1235,7 @@ class Request
      *
      * If your reverse proxy uses a different header name than "X-Forwarded-Proto"
      * ("SSL_HTTPS" for instance), configure it via the $trustedHeaderSet
-     * argument of the Request::setTrustedProxies() method instead.
+     * argument of the Requests::setTrustedProxies() method instead.
      *
      * @return bool
      */
@@ -1260,7 +1260,7 @@ class Request
      *
      * If your reverse proxy uses a different header name than "X-Forwarded-Host",
      * configure it via the $trustedHeaderSet argument of the
-     * Request::setTrustedProxies() method instead.
+     * Requests::setTrustedProxies() method instead.
      *
      * @return string
      *
@@ -1560,7 +1560,7 @@ class Request
         if (!func_num_args() || func_get_arg(0)) {
             // This deprecation should be turned into a BadMethodCallException in 4.0 (without adding the argument in the signature)
             // then setting $andCacheable to false should be deprecated in 4.1
-            @trigger_error('Checking only for cacheable HTTP methods with Symfony\Component\HttpFoundation\Request::isMethodSafe() is deprecated since Symfony 3.2 and will throw an exception in 4.0. Disable checking only for cacheable methods by calling the method with `false` as first argument or use the Request::isMethodCacheable() instead.', E_USER_DEPRECATED);
+            @trigger_error('Checking only for cacheable HTTP methods with Symfony\Component\HttpFoundation\Requests::isMethodSafe() is deprecated since Symfony 3.2 and will throw an exception in 4.0. Disable checking only for cacheable methods by calling the method with `false` as first argument or use the Requests::isMethodCacheable() instead.', E_USER_DEPRECATED);
 
             return in_array($this->getMethod(), array('GET', 'HEAD'));
         }
@@ -2059,7 +2059,7 @@ class Request
             $request = call_user_func(self::$requestFactory, $query, $request, $attributes, $cookies, $files, $server, $content);
 
             if (!$request instanceof self) {
-                throw new \LogicException('The Request factory must return an instance of Symfony\Component\HttpFoundation\Request.');
+                throw new \LogicException('The Requests factory must return an instance of Symfony\Component\HttpFoundation\Requests.');
             }
 
             return $request;

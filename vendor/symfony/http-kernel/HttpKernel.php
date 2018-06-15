@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * HttpKernel notifies events to convert a Request object to a Response one.
+ * HttpKernel notifies events to convert a Requests object to a Response one.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
@@ -110,7 +110,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
      *
      * Exceptions are not caught.
      *
-     * @param Request $request A Request instance
+     * @param Request $request A Requests instance
      * @param int     $type    The type of the request (one of HttpKernelInterface::MASTER_REQUEST or HttpKernelInterface::SUB_REQUEST)
      *
      * @return Response A Response instance
@@ -215,7 +215,7 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
      * Handles an exception by trying to convert it to a Response.
      *
      * @param \Exception $e       An \Exception instance
-     * @param Request    $request A Request instance
+     * @param Request    $request A Requests instance
      * @param int        $type    The type of the request
      *
      * @return Response A Response instance

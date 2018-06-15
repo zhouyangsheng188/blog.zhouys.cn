@@ -37,7 +37,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Debug bar subclass which adds all without Request and with LaravelCollector.
+ * Debug bar subclass which adds all without Requests and with LaravelCollector.
  * Rest is added in Service Provider
  *
  * @method void emergency($message)

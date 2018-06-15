@@ -42,7 +42,7 @@ class ConfigDataCollector extends DataCollector implements LateDataCollectorInte
     }
 
     /**
-     * Sets the Kernel associated with this Request.
+     * Sets the Kernel associated with this Requests.
      */
     public function setKernel(KernelInterface $kernel = null)
     {

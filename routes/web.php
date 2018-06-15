@@ -27,6 +27,8 @@ Route::group(['namespace' => 'Admin'], function(){
     //新建文章
     Route::get('/admin/article/create', 'ArticleController@create');
     //上传文章图片
+    Route::post('/admin/article/storeArticleImage', 'ArticleController@storeArticleImage');
+    //保存文章
     Route::post('/admin/article/store', 'ArticleController@store');
 });
 

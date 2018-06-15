@@ -33,7 +33,7 @@ class FragmentHandler
     private $requestStack;
 
     /**
-     * @param RequestStack                $requestStack The Request stack that controls the lifecycle of requests
+     * @param RequestStack                $requestStack The Requests stack that controls the lifecycle of requests
      * @param FragmentRendererInterface[] $renderers    An array of FragmentRendererInterface instances
      * @param bool                        $debug        Whether the debug mode is enabled or not
      */
@@ -81,7 +81,7 @@ class FragmentHandler
         }
 
         if (!$request = $this->requestStack->getCurrentRequest()) {
-            throw new \LogicException('Rendering a fragment can only be done when handling a Request.');
+            throw new \LogicException('Rendering a fragment can only be done when handling a Requests.');
         }
 
         return $this->deliver($this->renderers[$renderer]->render($uri, $request, $options));

@@ -32,7 +32,7 @@ class OpenHandler
     /**
      * Handles the current request
      *
-     * @param array $request Request data
+     * @param array $request Requests data
      * @param bool $echo
      * @param bool $sendHeader
      * @return string

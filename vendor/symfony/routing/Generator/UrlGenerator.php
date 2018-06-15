@@ -167,7 +167,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
             $url = '/';
         }
 
-        // the contexts base URL is already encoded (see Symfony\Component\HttpFoundation\Request)
+        // the contexts base URL is already encoded (see Symfony\Component\HttpFoundation\Requests)
         $url = strtr(rawurlencode($url), $this->decodedChars);
 
         // the path segments "." and ".." are interpreted as relative reference when resolving a URI; see http://tools.ietf.org/html/rfc3986#section-3.3

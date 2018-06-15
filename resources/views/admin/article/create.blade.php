@@ -22,9 +22,7 @@
             <a href="{{ url('admin/article/create') }}">发布文章</a>
         </li>
     </ul>
-    <form class="form-horizontal " action="{{ url('admin/article/store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <form class="form-horizontal" id="article_form" action="{{ url('admin/article/store') }}" method="post" enctype="multipart/form-data">
         <table class="table table-striped table-bordered table-hover">
             <tr>
                 <th width="7%">分类</th>
@@ -92,6 +90,7 @@
                 <th>内容</th>
                 <td>
                     <div id="editor"></div>
+                    <input id="text1" type="hidden" name="content"  style="width:100%; height:200px;">
                 </td>
             </tr>
             <tr>
@@ -104,7 +103,7 @@
             <tr>
                 <th></th>
                 <td>
-                    <input class="btn btn-success" type="submit" value="提交">
+                    <input id="sub_article" class="btn btn-success" type="button" value="提交">
                 </td>
             </tr>
         </table>
@@ -133,11 +132,20 @@
 @section('js')
     <script src="{{ asset('statics/gentelella/vendors/switchery/dist/switchery.min.js') }}"></script>
     <script src="{{ asset('statics/wangEditor/release/wangEditor.min.js') }}"></script>
+    <script src="{{ asset('statics/layer/layer.js') }}"></script>
+    <script src="{{asset('js/popups.js')}}"></script>
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         var E = window.wangEditor;
         var editor = new E('#editor');
+        var $content = $('#text1');
         //上传图片
-        editor.customConfig.uploadImgServer = '/admin/article/store';
+        editor.customConfig.uploadImgServer = '/admin/article/storeArticleImage';
         // 将图片大小限制为 3M
         editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
         // 将 timeout 时间改为 10s
@@ -149,37 +157,37 @@
         //自定义 fileName
         editor.customConfig.uploadFileName = 'articlePic';
         editor.customConfig.uploadImgHooks = {
-//            before: function (xhr, editor, files) {
-//                // 图片上传之前触发
-//                // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
-//
-//                // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
-//                // return {
-//                //     prevent: true,
-//                //     msg: '放弃上传'
-//                // }
-//            },
-            success: function (xhr, editor, result,insertImg) {
-
-            },
             customInsert: function (insertImg, result, editor) {
-                // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
-                // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
-
-                // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
-                //console.log(result);
-console.log(result);
-                var url = result.data[0];
+                var url = result.url;
                 insertImg(url);
-                console.log(url);
-                // result 必须是一个 JSON 格式字符串！！！否则报错
             }
         }
         editor.customConfig.customAlert = function (info) {
             // info 是需要提示的内容
             alert('图片长传失败')
         }
-        editor.create()
+        editor.customConfig.onchange = function (html) {
+            $content.val(html)
+        }
+        editor.create();
+
+        //ajax提交表单
+        $('#sub_article').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: "store",
+                data: $('#article_form').serialize(),
+                dataType: 'json',
+                success: function(res){
+                    console.log(res)
+                },
+                error: function(response){
+                    $.each(response.responseJSON.errors, function (k, v) {
+                        popups.error(v[0]);
+                    })
+                }
+            })
+        })
 
         function addTag() {
             var postData = {
