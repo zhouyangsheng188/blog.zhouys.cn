@@ -179,7 +179,9 @@
                 data: $('#article_form').serialize(),
                 dataType: 'json',
                 success: function(res){
-                    console.log(res)
+                    if(res.status==1){
+                        popups.isok(res.message)
+                    }
                 },
                 error: function(response){
                     $.each(response.responseJSON.errors, function (k, v) {

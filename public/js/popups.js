@@ -37,13 +37,13 @@ var popups = {
     },
 
     //无需跳转到指定页面的确认弹出层
-    toconfirm : function(message) {
+    isok : function(message) {
         layer.open({
             content : message,
-            icon:3,
-            btn : ['确定'],
-            offset: ['280px']
+            icon : 1,
+            offset: ['280px'],
+            anim:4
         });
-    },
+    }
 }
 

@@ -52,19 +52,20 @@ class ArticleController extends Controller
     public function store(Store $request,Article $article)
     {
         $data = $request->except('_token');
-        // 上传封面图
-        if ($request->hasFile('cover')) {
-            $result = upload('cover', 'uploads/article');
-            if ($result['status_code'] === 200) {
-                $data['cover'] = $result['data']['path'].$result['data']['new_name'];
-            }
-        }
 
-        $result = $article->save($data);
+        // 上传封面图
+//        if ($request->hasFile('cover')) {
+//            $result = upload('cover', 'uploads/article');
+//            if ($result['status_code'] === 200) {
+//                $data['cover'] = $result['data']['path'].$result['data']['new_name'];
+//            }
+//        }
+
+        $result = $article->storeData($data);
         if ($result) {
-            return ['status'=>1,'提交成功'];
+            return ['status'=>1,'message'=>'提交成功'];
         }else{
-            return ['status'=>0,'提交失败'];
+            return ['status'=>0,'message'=>'提交失败'];
         }
     }
 
