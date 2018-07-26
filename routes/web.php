@@ -30,6 +30,8 @@ Route::group(['namespace' => 'Admin'], function(){
     Route::post('/admin/article/storeArticleImage', 'ArticleController@storeArticleImage');
     //保存文章
     Route::post('/admin/article/store', 'ArticleController@store');
+    //分类列表
+    Route::get('/admin/category/index', 'CategoryController@index');
 });
 
 
